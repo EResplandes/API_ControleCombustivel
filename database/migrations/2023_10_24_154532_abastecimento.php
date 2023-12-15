@@ -16,9 +16,8 @@ return new class extends Migration
         Schema::create('abastecimentos', function (Blueprint $table) {
             $table->id();
             $table->float('Quantidade_ML');
-            // $table->unsignedBigInteger('uid_funcionario');
             $table->string('uid_veiculo');
-            // $table->foreign('uid_funcionario')->references('uid')->on('funcionarios');
+            $table->foreign('uid_funcionario')->references('uid')->on('funcionarios');
             $table->timestamps();
         });
     }

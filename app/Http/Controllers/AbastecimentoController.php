@@ -6,15 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Abastecimento;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use App\Services\AbastecimentoService;
+use App\Http\Requests\AbastecimentoRequest;
 
 class AbastecimentoController extends Controller
 {
     protected $Abastecimento;
+    protected $abastecimentoService;
 
-    public function __construct(Abastecimento $Abastecimento)
+    public function __construct(Abastecimento $Abastecimento, AbastecimentoService $abastecimentoService)
     {
         $this->Abastecimento = $Abastecimento;
+        $this->abastecimentoService = $abastecimentoService;
     }
 
     public function cadastroAbastecimento(Request $request)
@@ -29,13 +32,7 @@ class AbastecimentoController extends Controller
 
         } else {
 
-            $dados = [
-                'Quantidade_ML' => $request->input('Quantidade_ML'),
-                'uid_funcionario' => $request->input('uid_funcionario'),
-                'uid_veiculo' => $request->input('uid_veiculo'),
-            ];
-
-            DB::table('abastecimentos')->insert($dados); // Inserindo dados na tabela
+            Abastecimento::create($request->all());
 
             return response()->json(['Mensagem:' => 'Cadastro realizado com sucesso!']); // Retornando resposta para a requisição
 
@@ -66,8 +63,17 @@ class AbastecimentoController extends Controller
     {
         
         $dados = DB::table('veiculos')->select('tag')->get();
-
+        
         return response()->json($dados); // retorna resposta para a requisição
+
+    }
+
+    public function buscaAbastecimento()
+    {
+
+        $dados = $this->abastecimentoService->getAll();
+
+        return response()->json(['Resposta' => $dados]);
 
     }
 
