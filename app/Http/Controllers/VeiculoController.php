@@ -61,13 +61,13 @@ class VeiculoController extends Controller
 
     public function deletaVeiculo($id)
     {
-        $this->deletaVeiculo($id);
-        return response()->json(['Resposta' => 'Veículo deletado com sucesso!']);
+        $this->veiculoService->deletaVeiculo($id);
+        return response()->json(['Resposta' => 'Veículo deletado com sucesso!'], 200);
     }
 
     public function registraVeiculo(VeiculoRequest $request)
-    {
-        $this->registraVeiculo($request);
-        return response()->json(['Resposta' => 'Veículo cadastrado com sucesso!']);
+    {   
+        $this->veiculoService->registraVeiculo($request);
+        return response()->json(['Resposta' => 'Veículo cadastrado com sucesso!'], 200);
     }
 }

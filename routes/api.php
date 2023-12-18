@@ -44,4 +44,10 @@ Route::prefix('web')->group(function () {
         Route::post('/cadastro', [VeiculoController::class, 'registraVeiculo']);
     });
 
+    Route::prefix('funcionarios')->group(function() {
+        Route::get('/busca', [FuncionarioController::class, 'buscaFuncionarios']);
+        Route::delete('/deleta/{id}', [FuncionarioController::class, 'deletaFuncionario'])->middleware('VerificaID');
+        Route::post('/cadastro', [FuncionarioController::class, 'registraFuncionario']);
+    });
+
 });

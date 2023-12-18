@@ -28,7 +28,7 @@ class VeiculoService
             'modelo' => $request->input('modelo'),
             'marca' => $request->input('marca')
         ];
-
+        
         return DB::table('veiculos')->insert($dados); // Cadastra veículo no banco de dados
 
     }

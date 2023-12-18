@@ -15,7 +15,7 @@ class VerificaID
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
+    {   
         $id = $request->route('id');
         if (!isset($id) || !is_numeric($id)) {
             return response()->json(['error' => 'O parâmetro de ID deve ser um inteiro não nulo.'], 400);
