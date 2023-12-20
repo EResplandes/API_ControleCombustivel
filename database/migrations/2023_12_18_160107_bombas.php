@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('veiculos', function (Blueprint $table) {
+        Schema::create('bombas', function (Blueprint $table) {
             $table->id();
-            $table->integer('tag')->unique();
-            $table->string('placa')->unique();
-            $table->string('modelo');
-            $table->string('marca');
+            $table->string('local');
+            $table->integer('numero_bomba');
             $table->timestamps();
         });
     }

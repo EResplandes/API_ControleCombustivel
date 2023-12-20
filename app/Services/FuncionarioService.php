@@ -11,7 +11,12 @@ class FuncionarioService
     public function buscaFuncionarios()
     {
 
-        return DB::table('funcionarios')->get(); // Busca todos funcionários
+        return Funcionario::select('*')
+        ->join('bombas', 'funcionarios.fk_bomba', '=', 'bombas.id')
+        ->get()
+        ->makeHidden(['fk_bomba', 'created_at', 'updated_at', 'created_at', 'updated_at']);
+
+        
 
     }
 
@@ -21,6 +26,7 @@ class FuncionarioService
         $cpf_formatado = $this->formatarCpf($request->input('cpf'));
 
         $dados = [
+            'uid' => $request->input('uid'),
             'nome_completo' => $request->input('nome_completo'),
             'cpf' => $cpf_formatado,
             'empresa' => $request->input('empresa')

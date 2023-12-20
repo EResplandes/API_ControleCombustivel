@@ -17,7 +17,11 @@ return new class extends Migration
             $table->id();
             $table->float('Quantidade_ML');
             $table->string('uid_veiculo');
-            $table->foreign('uid_funcionario')->references('uid')->on('funcionarios');
+            $table->string('uid_funcionario');
+            $table->unsignedBigInteger('uid_bomba');
+            $table->foreign('uid_funcionario')->references('uid_funcionario')->on('funcionarios');
+            $table->foreign('uid_veiculo')->references('uid_veiculo')->on('veiculos');
+            $table->foreign('uid_bomba')->references('id')->on('bombas');
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ class FuncionarioRequest extends FormRequest
     public function rules()
     {
         return [
+            'uid' => 'required|unique:funcionarios|digits_between:8,8',
             'nome_completo' => 'required',
             'cpf' => 'required|unique:funcionarios|digits_between:11,11',
             'empresa' => 'required'
@@ -33,6 +34,9 @@ class FuncionarioRequest extends FormRequest
     public function messages()
     {
         return [
+            'uid.required' => 'O campo UID é obrigatório!',
+            'uid.unique' => 'O UID já está em uso!',
+            'uid.digits_between' => 'O campo UID deve ter exatos 8 dígitos!',
             'nome_completo.required' => 'O campo NOME COMPLETO é obrigatório!',
             'cpf.required' => 'O campo CPF é obrigatório!',
             'cpf.unique' => 'O CPF já está em uso!',
