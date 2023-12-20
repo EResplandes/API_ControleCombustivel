@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Bomba extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'local',
+        'numero_bomba'
+    ];
+
 }

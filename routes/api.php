@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\AbastecimentoController;
+use App\Http\Controllers\BombaController;
 use App\Http\Controllers\VeiculoController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,12 @@ Route::prefix('web')->group(function () {
         Route::get('/busca', [FuncionarioController::class, 'buscaFuncionarios']);
         Route::delete('/deleta/{id}', [FuncionarioController::class, 'deletaFuncionario'])->middleware('VerificaID');
         Route::post('/cadastro', [FuncionarioController::class, 'registraFuncionario']);
+    });
+
+    Route::prefix('bombas')->group(function() {
+        Route::get('/busca', [BombaController::class, 'buscaBombas']);
+        Route::delete('/deleta/{id}', [BombaController::class, 'deletaBomba'])->middleware('VerificaID');
+        Route::post('/cadastro', [BombaController::class, 'registraBomba']);
     });
 
 });

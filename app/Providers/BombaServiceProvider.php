@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\FuncionarioService;
+use App\Services\BombaService;
 
-class FuncionarioServiceProviders extends ServiceProvider
+class BombaServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -14,9 +14,9 @@ class FuncionarioServiceProviders extends ServiceProvider
      */
     public function register()
     {
-        
-        $this->app->singleton(FuncionarioService::class, function ($app){
-            return new FuncionarioService();
+
+        $this->app->singleton(BombaService::class, function ($app){
+            return new BombaService();
         });
 
     }

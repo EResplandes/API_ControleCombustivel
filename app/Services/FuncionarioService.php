@@ -11,12 +11,10 @@ class FuncionarioService
     public function buscaFuncionarios()
     {
 
-        return Funcionario::select('*')
+        return Funcionario::select('funcionarios.id', 'funcionarios.nome_completo', 'funcionarios.cpf', 'funcionarios.empresa', 'funcionarios.uid', 'bombas.local', 'bombas.numero_bomba')
         ->join('bombas', 'funcionarios.fk_bomba', '=', 'bombas.id')
-        ->get()
-        ->makeHidden(['fk_bomba', 'created_at', 'updated_at', 'created_at', 'updated_at']);
+        ->get();
 
-        
 
     }
 
@@ -29,7 +27,8 @@ class FuncionarioService
             'uid' => $request->input('uid'),
             'nome_completo' => $request->input('nome_completo'),
             'cpf' => $cpf_formatado,
-            'empresa' => $request->input('empresa')
+            'empresa' => $request->input('empresa'),
+            'fk_bomba' => 1
         ];
 
         return DB::table('funcionarios')->insert($dados); // Cadastra novo funcionário
@@ -39,7 +38,7 @@ class FuncionarioService
     public function deletaFuncionario($id)
     {
 
-        return DB::table('funcionarios')->where('uid', $id)->delete(); // Deleta funcionário de acordo com id
+        return DB::table('funcionarios')->where('id', $id)->delete(); // Deleta funcionário de acordo com id
 
     }
 

@@ -24,7 +24,7 @@ class FuncionarioRequest extends FormRequest
     public function rules()
     {
         return [
-            'uid' => 'required|unique:funcionarios|digits_between:8,8',
+            'uid' => 'required|unique:funcionarios',
             'nome_completo' => 'required',
             'cpf' => 'required|unique:funcionarios|digits_between:11,11',
             'empresa' => 'required'
