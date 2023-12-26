@@ -38,31 +38,31 @@ Route::prefix('veiculo')->group(function () {
 // Rotas utilizadas no Sistema Web 
 Route::prefix('web')->group(function () {
 
-    Route::get('/painel', [AbastecimentoController::class, 'buscaAbastecimento']);
-    Route::get('/notificacoes', [AbastecimentoController::class, 'buscaAbastecimentoLimitado']);
-    Route::get('/busca-litros', [AbastecimentoController::class, 'buscaLitros']);
+    Route::get('/painel', [AbastecimentoController::class, 'buscaAbastecimento'])->middleware('jwt.auth');
+    Route::get('/notificacoes', [AbastecimentoController::class, 'buscaAbastecimentoLimitado'])->middleware('jwt.auth');
+    Route::get('/busca-litros', [AbastecimentoController::class, 'buscaLitros'])->middleware('jwt.auth');
 
-    Route::prefix('auth')->group(function() {
+    Route::prefix('auth')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/verifica-token', [AuthController::class, 'verificaToken'])->middleware('jwt.verify');
     });
 
-    Route::prefix('veiculos')->group(function () {
+    Route::prefix('veiculos')->middleware('jwt.auth')->group(function () {
         Route::get('/busca', [VeiculoController::class, 'buscaVeiculos']);
         Route::delete('/deleta/{id}', [VeiculoController::class, 'deletaVeiculo'])->middleware('VerificaID');
         Route::post('/cadastro', [VeiculoController::class, 'registraVeiculo']);
     });
 
-    Route::prefix('funcionarios')->middleware('jwt.auth')->group(function() {
+    Route::prefix('funcionarios')->middleware('jwt.auth')->group(function () {
         Route::get('/busca', [FuncionarioController::class, 'buscaFuncionarios']);
         Route::delete('/deleta/{id}', [FuncionarioController::class, 'deletaFuncionario'])->middleware('VerificaID');
         Route::post('/cadastro', [FuncionarioController::class, 'registraFuncionario']);
     });
 
-    Route::prefix('bombas')->group(function() {
+    Route::prefix('bombas')->middleware('jwt.auth')->group(function () {
         Route::get('/busca', [BombaController::class, 'buscaBombas']);
         Route::delete('/deleta/{id}', [BombaController::class, 'deletaBomba'])->middleware('VerificaID');
         Route::post('/cadastro', [BombaController::class, 'registraBomba']);
     });
-
 });

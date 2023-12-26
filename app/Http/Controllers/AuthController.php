@@ -24,10 +24,17 @@ class AuthController extends Controller
 
     }
 
+    public function verificaToken(Request $request){
+
+        $query = $this->authService->verificaToken($request); // Verifica se o token é valido
+        return response()->json(['Resposta' => $query]); // Retornando resposta para o usuário
+
+    }
+
     public function logout(Request $request) {
 
         $query = $this->authService->sair($request); // Colocando token da blacklist
-        return response()->json(['Resposta' => 'Usuário deslogado com sucesso!']);
+        return response()->json(['Resposta' => 'Usuário deslogado com sucesso!']); // Retornando resposta para o usuário
 
     }
 

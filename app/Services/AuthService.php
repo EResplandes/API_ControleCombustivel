@@ -3,7 +3,12 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Bomba;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use DateTime;
+
 
 class AuthService
 {
@@ -22,13 +27,38 @@ class AuthService
         } else {
 
             $informações = DB::table('users')
-            ->select('id', 'name', 'email', 'tipo_usuario')
-            ->where('email', $email)
-            ->get();
+                ->select('id', 'name', 'email', 'tipo_usuario')
+                ->where('email', $email)
+                ->get();
 
-            return ['Token' => $token, 'Usuário'=> $informações];
+            return ['Token' => $token, 'Usuário' => $informações];
         }
+    }
 
+    public function verificaToken($request)
+    {      
+
+        // Pegando token
+        $tokenString = $request->input('token');
+
+        // Pegando data e hora atual
+        date_default_timezone_set('America/Sao_Paulo');
+        $dataAtual = date('Y-m-d H:i:s');
+
+        $payload = JWTAuth::getPayload($tokenString)->toArray();
+
+        // Pegando datas 
+        $dataExpira = $payload['exp'];
+
+        // Convertendo para objetos DateTime
+        $expDate = new DateTime("@$dataExpira");
+
+        // Verifica token
+        if($expDate < $dataAtual){
+            return 'O token não é mais valído!';
+        } else {
+            return 'O token está valído!';
+        }
     }
 
     public function sair($request)
@@ -38,6 +68,5 @@ class AuthService
         $query = auth('api')->logout($token); // Colocando token na blacklist
 
         return $query;
-
     }
 }
