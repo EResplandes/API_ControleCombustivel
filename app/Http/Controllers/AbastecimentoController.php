@@ -52,9 +52,9 @@ class AbastecimentoController extends Controller
         $query = DB::table('veiculos')->where('tag', $tag)->count();
 
         if ($query == 0) {
-            return response()->json(false); // retorna resposta para a requisição
+            return response()->json(false); // Retorna resposta para a requisição
         } else {
-            return response()->json(true); // retorna resposta para a requisição
+            return response()->json(true); // Retorna resposta para a requisição
         }
 
     }
@@ -62,9 +62,8 @@ class AbastecimentoController extends Controller
     public function sincronizaVeiculo()
     {
         
-        $dados = DB::table('veiculos')->select('tag')->get();
-        
-        return response()->json($dados); // retorna resposta para a requisição
+        $dados = DB::table('veiculos')->select('tag')->get();    
+        return response()->json($dados); // Retorna resposta para a requisição
 
     }
 
@@ -72,8 +71,23 @@ class AbastecimentoController extends Controller
     {
 
         $dados = $this->abastecimentoService->getAll();
+        return response()->json(['Resposta' => $dados]); // Retornando resposta para a requisição
 
-        return response()->json(['Resposta' => $dados]);
+    }
+
+    public function buscaAbastecimentoLimitado()
+    {
+
+        $dados = $this->abastecimentoService->getAllLimited();
+        return response()->json(['Resposta' => $dados]); // Retornando resposta para a requisição
+
+    }
+
+    public function buscaLitros()
+    {
+
+        $dados = $this->abastecimentoService->buscaLitros();
+        return response()->json(['Resposta' => $dados]); // Retorna resposta para a requisição
 
     }
 

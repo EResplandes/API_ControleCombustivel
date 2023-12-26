@@ -18,18 +18,19 @@ class Abastecimento extends Model
 
     public function funcionario()
     {
-        return $this->hasMany(Funcionario::class);
+        return $this->BelongsTo(Funcionario::class, 'uid_funcionario', 'uid');
     }
 
     public function veiculo()
     {
-        return $this->hasMany(Veiculo::class);
+        return $this->BelongsTo(Veiculo::class, 'uid_veiculo', 'tag');
     }
 
     public function bomba()
     {
-        return $this->hasMany(Bomba::class);
+        return $this->BelongsTo(Bomba::class, 'uid_bomba', 'id');
     }
+
 
     public function rules(){
         return [

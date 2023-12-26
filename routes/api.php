@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\AbastecimentoController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BombaController;
 use App\Http\Controllers\VeiculoController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,13 @@ Route::prefix('veiculo')->group(function () {
 Route::prefix('web')->group(function () {
 
     Route::get('/painel', [AbastecimentoController::class, 'buscaAbastecimento']);
+    Route::get('/notificacoes', [AbastecimentoController::class, 'buscaAbastecimentoLimitado']);
+    Route::get('/busca-litros', [AbastecimentoController::class, 'buscaLitros']);
+
+    Route::prefix('auth')->group(function() {
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+    });
 
     Route::prefix('veiculos')->group(function () {
         Route::get('/busca', [VeiculoController::class, 'buscaVeiculos']);
@@ -45,7 +53,7 @@ Route::prefix('web')->group(function () {
         Route::post('/cadastro', [VeiculoController::class, 'registraVeiculo']);
     });
 
-    Route::prefix('funcionarios')->group(function() {
+    Route::prefix('funcionarios')->middleware('jwt.auth')->group(function() {
         Route::get('/busca', [FuncionarioController::class, 'buscaFuncionarios']);
         Route::delete('/deleta/{id}', [FuncionarioController::class, 'deletaFuncionario'])->middleware('VerificaID');
         Route::post('/cadastro', [FuncionarioController::class, 'registraFuncionario']);

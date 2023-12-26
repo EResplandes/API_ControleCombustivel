@@ -14,4 +14,10 @@ class Bomba extends Model
         'numero_bomba'
     ];
 
+    public function abastecimentos()
+    {
+        return $this->hasMany(Abastecimento::class, 'uid_bomba', 'id');
+    }
+
+
 }
