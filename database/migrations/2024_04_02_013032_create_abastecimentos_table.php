@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('abastecimentos', function (Blueprint $table) {
             $table->id();
             $table->float('Quantidade_ML');
-            $table->string('uid_veiculo');
-            $table->string('uid_funcionario');
+            $table->unsignedBigInteger('uid_veiculo');
+            $table->unsignedBigInteger('uid_funcionario');
             $table->unsignedBigInteger('uid_bomba');
-            $table->foreign('uid_funcionario')->references('uid_funcionario')->on('funcionarios');
-            $table->foreign('uid_veiculo')->references('uid_veiculo')->on('veiculos');
+            $table->foreign('uid_funcionario')->references('uid')->on('funcionarios');
+            $table->foreign('uid_veiculo')->references('tag')->on('veiculos');
             $table->foreign('uid_bomba')->references('id')->on('bombas');
             $table->timestamps();
         });
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('abastecimentos');
     }
 };

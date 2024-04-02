@@ -18,6 +18,7 @@ class BombaService
     public function registraBomba($request)
     {
 
+        // Armazena informações necessárias para inserir no banco de dados
         $dados = [
           'local' => $request->input('local'),
           'numero_bomba' => $request->input('numero_bomba')  

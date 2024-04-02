@@ -4,8 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use function PHPUnit\Framework\once;
-
 return new class extends Migration
 {
     /**
@@ -16,16 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('funcionarios', function (Blueprint $table) {
-            $table->id();
+            $table->id('uid');
             $table->string('nome_completo');
             $table->string('cpf')->unique();
             $table->string('empresa');
-            $table->string('uid');
             $table->unsignedBigInteger('fk_bomba');
             $table->foreign('fk_bomba')->references('id')->on('bombas');
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('funcionarios');
     }
 };

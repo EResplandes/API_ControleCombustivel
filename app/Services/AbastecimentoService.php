@@ -19,16 +19,14 @@ class AbastecimentoService
 
         // Buscando todos os abastecimentos
         $registros = Abastecimento::select(
-            'abastecimentos.id',
-            'abastecimentos.Quantidade_ML',
-            'abastecimentos.created_at',
-            'funcionarios.nome_completo',
-            'funcionarios.empresa',
-            'veiculos.placa',
-            'veiculos.modelo',
+            'abastecimentos.*',
+            // 'funcionarios.nome_completo',
+            // 'funcionarios.empresa',
+            // 'veiculos.placa',
+            // 'veiculos.modelo',
         )
-            ->join('funcionarios', 'funcionarios.uid', '=', 'abastecimentos.uid_funcionario')
-            ->join('veiculos', 'veiculos.tag', '=', 'abastecimentos.uid_veiculo')
+            // ->join('funcionarios', 'funcionarios.uid', '=', 'abastecimentos.uid_funcionario')
+            // ->join('veiculos', 'veiculos.tag', '=', 'abastecimentos.uid_veiculo')
             ->join('bombas', 'bombas.id', '=', 'abastecimentos.uid_bomba')
             ->selectRaw('DATE_FORMAT(abastecimentos.created_at, "%d/%m/%Y %H:%i:%s") as data_formatada')
             ->get();
@@ -43,18 +41,16 @@ class AbastecimentoService
         
         // Buscando todos os abastecimentos com um limite de 20
         $registros = Abastecimento::select(
-            'abastecimentos.id',
-            'abastecimentos.Quantidade_ML',
-            'abastecimentos.created_at',
-            'funcionarios.nome_completo',
-            'funcionarios.empresa',
-            'veiculos.placa',
-            'veiculos.modelo',
-            'bombas.local'
+            'abastecimentos.*',
+            // 'funcionarios.nome_completo',
+            // 'funcionarios.empresa',
+            // 'veiculos.placa',
+            // 'veiculos.modelo',
+            // 'bombas.local'
         )
-            ->join('funcionarios', 'funcionarios.uid', '=', 'abastecimentos.uid_funcionario')
-            ->join('veiculos', 'veiculos.tag', '=', 'abastecimentos.uid_veiculo')
-            ->join('bombas', 'bombas.id', '=', 'abastecimentos.uid_bomba')
+            // ->join('funcionarios', 'funcionarios.uid', '=', 'abastecimentos.uid_funcionario')
+            // ->join('veiculos', 'veiculos.tag', '=', 'abastecimentos.uid_veiculo')
+            // ->join('bombas', 'bombas.id', '=', 'abastecimentos.uid_bomba')
             ->selectRaw('DATE_FORMAT(abastecimentos.created_at, "%d/%m/%Y %H:%i:%s") as data_formatada')
             ->orderBy('abastecimentos.id', 'desc')
             ->limit(20)

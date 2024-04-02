@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('veiculos', function (Blueprint $table) {
-            $table->id();
-            $table->string('tag')->unique();
+            $table->id('tag');
             $table->string('placa')->unique();
             $table->string('modelo');
             $table->string('marca');
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('veiculos');
     }
 };

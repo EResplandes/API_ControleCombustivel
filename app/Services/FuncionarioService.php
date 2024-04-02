@@ -11,6 +11,7 @@ class FuncionarioService
     public function buscaFuncionarios()
     {
 
+        // Buscando todos os funcionários
         return Funcionario::select('funcionarios.id', 'funcionarios.nome_completo', 'funcionarios.cpf', 'funcionarios.empresa', 'funcionarios.uid', 'bombas.local', 'bombas.numero_bomba')
         ->join('bombas', 'funcionarios.fk_bomba', '=', 'bombas.id')
         ->get();
@@ -21,8 +22,9 @@ class FuncionarioService
     public function registraFuncionario($request)
     {
 
-        $cpf_formatado = $this->formatarCpf($request->input('cpf'));
+        $cpf_formatado = $this->formatarCpf($request->input('cpf')); // Formata cpf com caracteres padrões
 
+        // Armazenando informações ncessárias para inserir no banco de dados
         $dados = [
             'uid' => $request->input('uid'),
             'nome_completo' => $request->input('nome_completo'),
@@ -55,6 +57,6 @@ class FuncionarioService
         $cpfFormatado = substr_replace($cpfFormatado, '.', 7, 0);
         $cpfFormatado = substr_replace($cpfFormatado, '-', 11, 0);
 
-        return $cpfFormatado;
+        return $cpfFormatado; // Retorna o cpf formatado
     }
 }

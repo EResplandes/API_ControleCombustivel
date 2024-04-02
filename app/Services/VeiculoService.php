@@ -22,6 +22,7 @@ class VeiculoService
 
     public function registraVeiculo($request){
         
+        // Armazenando informações necessárias em um array para inserir no banco de dados
         $dados = [
             'tag' => $request->input('tag'),
             'placa' => $request->input('placa'),

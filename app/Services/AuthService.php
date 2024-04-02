@@ -27,7 +27,8 @@ class AuthService
         } else {
 
             $informações = DB::table('users')
-                ->select('id', 'name', 'email', 'tipo_usuario')
+                // ->select('id', 'name', 'email', 'tipo_usuario')
+                ->select('id', 'name', 'email')
                 ->where('email', $email)
                 ->get();
 
