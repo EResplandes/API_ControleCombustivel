@@ -9,15 +9,15 @@ class Bomba extends Model
 {
     use HasFactory;
 
+    protected $table = 'bombas';
+
     protected $fillable = [
-        'local',
-        'numero_bomba'
+        'localizacao',
+        'id_combustivel'
     ];
 
-    public function abastecimentos()
+    public function combustivel()
     {
-        return $this->hasMany(Abastecimento::class, 'uid_bomba', 'id');
+        return $this->belongsTo(Combustivel::class, 'id_combustivel');
     }
-
-
 }

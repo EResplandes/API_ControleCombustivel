@@ -4,35 +4,47 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
-
+use App\Models\Frentista;
 
 class Abastecimento extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['Quantidade_ML', 'uid_funcionario', 'uid_veiculo', 'uid_bomba'];
+    protected $fillable = [
+        'Quantidade_ML',
+        'maquina',
+        'placa',
+        'horimetro',
+        'responsavel_maquina',
+        'id_bomba',
+        'id_frentista',
+        'id_veiculo'
+    ];
+
+    protected $hidden = [
+        'id_veiculo',
+        'updated_at'
+    ];
+
     protected $dates = ['created_at', 'updated_at'];
 
-    public function funcionario()
+    public function frentista()
     {
-        return $this->BelongsTo(Funcionario::class, 'uid_funcionario', 'uid');
+        return $this->belongsTo(User::class, 'id_frentista');
     }
 
     public function veiculo()
     {
-        return $this->BelongsTo(Veiculo::class, 'uid_veiculo', 'tag');
+        return $this->belongsTo(Veiculo::class, 'id_veiculo');
     }
 
-    public function bomba()
+    public function local()
     {
-        return $this->BelongsTo(Bomba::class, 'uid_bomba', 'id');
+        return $this->belongsTo(Local::class, 'id_local');
     }
 
-
-    public function rules(){
+    public function rules()
+    {
         return [
             'Quantidade_ML' => 'required',
             'uid_funcionario' => 'required',
@@ -41,7 +53,8 @@ class Abastecimento extends Model
         ];
     }
 
-    public function feedback(){
+    public function feedback()
+    {
         return [
             'Quantidade_ML.required' => 'A quantidade de ML é obrigatória!',
             'uid_funcionario.required' => 'O identificador do funcionário é obrigatório!',
@@ -49,5 +62,4 @@ class Abastecimento extends Model
             'uid_bomba.required' => 'O identificador da bomba é obrigatório!'
         ];
     }
-
 }

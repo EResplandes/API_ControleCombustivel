@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedBigInteger('id_local');
+            $table->unsignedBigInteger('id_tipo');
+            $table->foreign('id_local')->references('id')->on('local');
+            $table->foreign('id_tipo')->references('id')->on('tipo_usuario');
             $table->rememberToken();
             $table->timestamps();
         });

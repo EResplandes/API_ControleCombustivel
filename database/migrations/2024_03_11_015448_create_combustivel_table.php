@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('veiculos', function (Blueprint $table) {
-            $table->id('tag');
-            $table->string('placa')->unique();
-            $table->string('modelo');
-            $table->string('marca');
+        Schema::create('combustivel', function (Blueprint $table) {
+            $table->id();
+            $table->string('combustivel');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('veiculos');
+        Schema::dropIfExists('combustivel');
     }
 };

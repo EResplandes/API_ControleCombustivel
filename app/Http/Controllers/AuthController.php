@@ -8,7 +8,7 @@ use App\Http\Requests\AuthRequest;
 
 class AuthController extends Controller
 {
-    
+
     protected $authService;
 
     public function __construct(AuthService $authService)
@@ -20,7 +20,7 @@ class AuthController extends Controller
 
 
        $query = $this->authService->autenticacao($request); // Verifica se o usuário está cadastrado
-        return response()->json(['Resposta' => $query]);  // Retornando resposta para o usuário
+        return response()->json(['resposta' => $query]);  // Retornando resposta para o usuário
 
     }
 

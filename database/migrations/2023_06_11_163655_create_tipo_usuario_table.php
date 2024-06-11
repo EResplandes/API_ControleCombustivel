@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('funcionarios', function (Blueprint $table) {
-            $table->id('uid');
-            $table->string('nome_completo');
-            $table->string('cpf')->unique();
-            $table->string('empresa');
-            $table->unsignedBigInteger('fk_bomba');
-            $table->foreign('fk_bomba')->references('id')->on('bombas');
+        Schema::create('tipo_usuario', function (Blueprint $table) {
+            $table->id();
+            $table->string('perfil');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('funcionarios');
+        Schema::dropIfExists('tipo_usuario');
     }
 };

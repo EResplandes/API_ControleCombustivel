@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Funcionario;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AbastecimentoResource extends JsonResource
@@ -15,13 +14,16 @@ class AbastecimentoResource extends JsonResource
      */
     public function toArray($request)
     {
-       return [
+        return [
             "id"                => $this->id,
             "Quantidade_ML"     => $this->Quantidade_ML,
-            "created_at"        => $this->created_at,
-            "funcionario"       => new FuncionarioResource($this->funcionario),      
-            "veiculo"           => $this->veiculo,      
-            "bomba"             => $this->bomba,      
+            "maquina"           => $this->maquina,
+            "placa"             => $this->placa,
+            "horimetro"         => $this->horimetro,
+            "motorista"         => $this->responsavel_maquina,
+            "dt_abastecimento"  => $this->created_at,
+            "frentista"         => new FrentistaResource($this->frentista),
+            "local"             => $this->local,
         ];
     }
 }

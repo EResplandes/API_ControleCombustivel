@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bombas', function (Blueprint $table) {
+        Schema::create('local', function (Blueprint $table) {
             $table->id();
-            $table->integer('bomba');
-            $table->unsignedBigInteger('id_combustivel');
-            $table->unsignedBigInteger('id_local');
-            $table->foreign('id_combustivel')->references('id')->on('combustivel');
-            $table->foreign('id_local')->references('id')->on('local');
+            $table->string('local')->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bombas');
+        Schema::dropIfExists('local');
     }
 };

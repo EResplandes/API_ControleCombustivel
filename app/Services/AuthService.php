@@ -27,17 +27,16 @@ class AuthService
         } else {
 
             $informações = DB::table('users')
-                // ->select('id', 'name', 'email', 'tipo_usuario')
-                ->select('id', 'name', 'email')
+                ->select('id', 'name', 'email', 'id_local', 'id_tipo')
                 ->where('email', $email)
                 ->get();
 
-            return ['Token' => $token, 'Usuário' => $informações];
+            return ['token' => $token, 'usuario' => $informações];
         }
     }
 
     public function verificaToken($request)
-    {      
+    {
 
         // Pegando token
         $tokenString = $request->input('token');
@@ -48,14 +47,14 @@ class AuthService
 
         $payload = JWTAuth::getPayload($tokenString)->toArray();
 
-        // Pegando datas 
+        // Pegando datas
         $dataExpira = $payload['exp'];
 
         // Convertendo para objetos DateTime
         $expDate = new DateTime("@$dataExpira");
 
         // Verifica token
-        if($expDate < $dataAtual){
+        if ($expDate < $dataAtual) {
             return 'O token não é mais valído!';
         } else {
             return 'O token está valído!';

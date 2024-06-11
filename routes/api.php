@@ -5,6 +5,7 @@ use App\Http\Controllers\AbastecimentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BombaController;
 use App\Http\Controllers\VeiculoController;
+use App\Models\Abastecimento;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,12 +36,17 @@ Route::prefix('veiculo')->group(function () {
     Route::post('/cadastro', [VeiculoController::class, 'cadastraVeiculo']);
 });
 
-// Rotas utilizadas no Sistema Web 
+// Rotas utilizadas no Sistema Web
 Route::prefix('web')->group(function () {
 
-    Route::get('/painel', [AbastecimentoController::class, 'buscaAbastecimento'])->middleware('jwt.auth');
-    Route::get('/notificacoes', [AbastecimentoController::class, 'buscaAbastecimentoLimitado'])->middleware('jwt.auth');
+    Route::get('/painel/{id}', [AbastecimentoController::class, 'buscaAbastecimentoFrentista'])->middleware('jwt.auth');
     Route::get('/busca-litros', [AbastecimentoController::class, 'buscaLitros'])->middleware('jwt.auth');
+
+    Route::prefix('abastecimento')->group(function () {
+        Route::put('/informa-horimetro/{id}', [AbastecimentoController::class, 'informaAbastecimento']);
+        Route::get('/busca-quantidades-abastecidas-local', [AbastecimentoController::class, 'pegaTotalLitros']);
+        Route::get('/busca-abastecimentos-geral', [AbastecimentoController::class, 'buscaAbastecimentosGeral']);
+    })->middleware('jwt.verify');
 
     Route::prefix('auth')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);

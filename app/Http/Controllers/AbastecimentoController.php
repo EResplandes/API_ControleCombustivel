@@ -7,7 +7,6 @@ use App\Models\Abastecimento;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Services\AbastecimentoService;
-use App\Http\Requests\AbastecimentoRequest;
 
 class AbastecimentoController extends Controller
 {
@@ -56,30 +55,21 @@ class AbastecimentoController extends Controller
         } else {
             return response()->json(true); // Retorna resposta para a requisição
         }
-
     }
 
     public function sincronizaVeiculo()
     {
-        
-        $dados = DB::table('veiculos')->select('tag')->get();    
+
+        $dados = DB::table('veiculos')->select('tag')->get();
         return response()->json($dados); // Retorna resposta para a requisição
 
     }
 
-    public function buscaAbastecimento()
+    public function buscaAbastecimentoFrentista($id)
     {
 
-        $dados = $this->abastecimentoService->getAll();
-        return response()->json(['Resposta' => $dados]); // Retornando resposta para a requisição
-
-    }
-
-    public function buscaAbastecimentoLimitado()
-    {
-
-        $dados = $this->abastecimentoService->getAllLimited();
-        return response()->json(['Resposta' => $dados]); // Retornando resposta para a requisição
+        $query = $this->abastecimentoService->getAllFrentista($id);
+        return response()->json(['resposta' => $query['resposta'], 'abastecimentos' => $query['abastecimentos'], 'totalML' => $query['totalML'], 'totalAbastecimentos' =>  $query['totalAbastecimentos']], $query['status']); // Retornando resposta para a requisição
 
     }
 
@@ -91,4 +81,23 @@ class AbastecimentoController extends Controller
 
     }
 
+    public function informaAbastecimento(Request $request, $id)
+    {
+
+        $query = $this->abastecimentoService->informaAbastecimento($request, $id); // Metódo responsável por informar dados no abastecimento
+        return response()->json(['resposta' => $query['resposta']], $query['status']); // Retorna resposta para a requisição
+
+    }
+
+    public function pegaTotalLitros()
+    {
+        $query = $this->abastecimentoService->pegaTotalLitros(); // Metódo responsável por buscar o total de ml por bomba
+        return response()->json(['resposta' => $query['resposta'], 'quantidades' => $query['quantidades']], $query['status']);
+    }
+
+    public function buscaAbastecimentosGeral()
+    {
+        $query = $this->abastecimentoService->buscaAbastecimentosGeral(); // Metódo responsável por buscar todos abastecimentos
+        return response()->json(['resposta' => $query['resposta'], 'abastecimentos' => $query['abastecimentos']], $query['status']);
+    }
 }
